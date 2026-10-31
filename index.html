@@ -57,8 +57,41 @@ nav button.on{color:#fff;background:var(--ac);box-shadow:0 0 18px var(--ac)}
 .bars{display:flex;gap:8px;align-items:flex-end;height:110px}.bars div{flex:1;text-align:center;font-size:.7rem}.bars i{display:block;border-radius:8px 8px 3px 3px;background:linear-gradient(var(--ac),#3478F6);min-height:3px}
 .sw{width:30px;height:30px;border-radius:50%;border:2px solid var(--bd);cursor:pointer}
 input[type=color]{padding:0;height:40px}input[type=checkbox]{width:auto}
+body{background:none!important}
+#bg{position:fixed;inset:0;z-index:-1;overflow:hidden;background:linear-gradient(160deg,var(--bg),var(--bg2))}
+#bg i{position:absolute;width:60vmax;height:60vmax;border-radius:50%;filter:blur(70px);opacity:.42;animation:fl 18s ease-in-out infinite alternate}
+[data-t=light] #bg i{opacity:.25}
+#bg i:nth-child(1){background:#7554F7;top:-25vmax;left:-20vmax}
+#bg i:nth-child(2){background:#3478F6;bottom:-28vmax;right:-22vmax;animation-delay:-6s;animation-duration:22s}
+#bg i:nth-child(3){background:#A78BFA;top:35%;left:40%;width:30vmax;height:30vmax;opacity:.18;animation-delay:-11s}
+@keyframes fl{to{transform:translate(12vmax,8vmax) scale(1.2)}}
+@keyframes up{from{opacity:0;transform:translateY(18px)}}
+#sp{position:fixed;inset:0;z-index:99;background:#000;display:grid;place-items:center;transition:opacity .6s,visibility .6s}#sp.out{opacity:0;visibility:hidden}
+#sp>div{text-align:center;color:#fff}#sp img{width:112px;height:112px;border-radius:26px;box-shadow:0 0 70px #7554F799;animation:spi 1.1s cubic-bezier(.2,1.4,.4,1) both}
+#sp b{display:block;margin-top:20px;letter-spacing:.45em;animation:up .8s .3s both}#sp small{display:block;margin-top:6px;animation:up .8s .5s both}
+@keyframes spi{from{transform:scale(.4) rotate(-25deg);opacity:0}}
+h1{background:linear-gradient(90deg,var(--tx),#A78BFA);-webkit-background-clip:text;background-clip:text;color:transparent}
+.card{border-top-color:rgba(255,255,255,.2);transition:transform .25s}
+.ent .it{animation:up .5s .15s both}
+.ent .view>*{animation:up .6s .36s cubic-bezier(.2,.8,.2,1) both}
+.ent .view>:nth-child(1){animation-delay:0s}.ent .view>:nth-child(2){animation-delay:.06s}.ent .view>:nth-child(3){animation-delay:.12s}.ent .view>:nth-child(4){animation-delay:.18s}.ent .view>:nth-child(5){animation-delay:.24s}.ent .view>:nth-child(6){animation-delay:.3s}
+.grad{background:linear-gradient(120deg,#3478F6,#7554F7,#A78BFA,#3478F6)!important;background-size:300% 300%;animation:gs 10s ease infinite;position:relative;overflow:hidden}
+.grad::after{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.3),transparent);transform:skewX(-20deg);animation:sh 5s 1s infinite;pointer-events:none}
+@keyframes gs{50%{background-position:100% 50%}}@keyframes sh{to{left:140%}}
+.ring{filter:drop-shadow(0 0 10px rgba(167,139,250,.55))}
+.grad .ring circle:first-child{stroke:rgba(255,255,255,.25)}.grad .ring circle:nth-child(2){stroke:#fff}
+.ent .ring circle:nth-child(2){animation:dash 1.4s cubic-bezier(.3,.7,.2,1) both}@keyframes dash{from{stroke-dashoffset:339.3}}
+.bar i{position:relative}.ent .bar i{animation:grow 1.1s cubic-bezier(.3,.7,.2,1) both}@keyframes grow{from{width:0}}
+.bars i{transform-origin:bottom}.ent .bars i{animation:sy .9s cubic-bezier(.3,.7,.2,1) both}@keyframes sy{from{transform:scaleY(0)}}
+.ck{position:relative}.ck.on{box-shadow:0 0 16px var(--c)}
+.ck.pop::after{content:"";position:absolute;inset:-3px;border-radius:50%;border:2px solid var(--c);animation:rp .6s ease-out forwards}@keyframes rp{to{transform:scale(2.3);opacity:0}}
+.it.dn{background:linear-gradient(90deg,color-mix(in srgb,var(--c) 20%,transparent),var(--card))}.it:active{transform:scale(.98)}
+nav button{transition:.35s cubic-bezier(.3,1.5,.5,1)}nav button.on{transform:translateY(-5px) scale(1.06)}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#34d399;margin-right:6px;animation:pl 1.6s infinite}@keyframes pl{to{box-shadow:0 0 0 10px transparent}}.dot{box-shadow:0 0 0 0 #34d399aa}
+.logo{width:46px;height:46px;border-radius:13px;box-shadow:0 0 22px #7554F788}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01s!important;animation-delay:0s!important;transition-duration:.01s!important}}
 </style></head><body data-t="dark">
-<div id="app"></div><div id="mod"></div><div id="toast"></div>
+<div id="bg"><i></i><i></i><i></i></div><div id="sp"><div><img src="icons/icon-192.png" alt=""><b>NEVENCHI</b><small>PLAN. STUDY. GROW. ACHIEVE.</small></div></div><div id="app"></div><div id="mod"></div><div id="toast"></div>
 <nav id="nav"></nav>
 <script>
 const $=s=>document.querySelector(s),CHK='<svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
@@ -94,14 +127,14 @@ const confetti=()=>{for(let i=0;i<26;i++){const e=document.createElement('div');
 function theme(){const t=S.set.theme,l=t==='light'||(t==='system'&&matchMedia('(prefers-color-scheme: light)').matches);document.body.dataset.t=l?'light':'dark';document.documentElement.style.setProperty('--ac',S.set.accent);document.documentElement.style.fontSize=S.set.fs+'px';document.querySelector('meta[name=theme-color]').content=l?'#F4F5FB':'#080D1C'}
 function item(a,dt,today){const d=isDone(a.id,dt),c=col(a.cat),od=today&&!d&&a.cat!=='sleep'&&a.s<a.e&&a.e<nowM();
 return`<div class="it ${d?'dn':''} ${od?'od':''}" style="--c:${c}"><button class="ck ${d?'on':''} ${LT===a.id+dt?'pop':''}" data-a="tg" data-id="${a.id}" data-d="${dt}" aria-label="Complete ${esc(a.name)}">${CHK}</button><div class="bd" data-a="ed" data-id="${a.id}"><b>${esc(a.name)}</b><small>${fmt(a.s)} – ${fmt(a.e)} · ${CATS[a.cat][0]}${a.prio==='high'?' · ⚑ High':''}${a.note?' · 📝':''}${over(a)?' · ⚠ overlap':''}${od?' · overdue':''}</small></div>${od?`<button class="btn sm g" data-a="rs" data-id="${a.id}">Reschedule</button>`:''}</div>`}
-const ring=p=>`<div class="ring"><svg width="130" height="130"><circle cx="65" cy="65" r="54" stroke="var(--bd)"/><circle cx="65" cy="65" r="54" stroke="url(#g)" stroke-dasharray="339.3" stroke-dashoffset="${339.3*(1-p/100)}" style="transition:stroke-dashoffset .8s"/><defs><linearGradient id="g"><stop offset="0" stop-color="#3478F6"/><stop offset="1" stop-color="#A78BFA"/></linearGradient></defs></svg><div class="t">${p}%</div></div>`;
+const ring=p=>`<div class="ring"><svg width="130" height="130"><circle cx="65" cy="65" r="54" stroke="var(--bd)"/><circle cx="65" cy="65" r="54" stroke="url(#g)" stroke-dasharray="339.3" stroke-dashoffset="${339.3*(1-p/100)}" style="transition:stroke-dashoffset .8s"/><defs><linearGradient id="g"><stop offset="0" stop-color="#3478F6"/><stop offset="1" stop-color="#A78BFA"/></linearGradient></defs></svg><div class="t"><span data-n="${p}">${p}</span>%</div></div>`;
 const MSG=['Make today count.','Small steps, big results.','Discipline beats motivation.','Plan. Study. Grow. Achieve.'];
 function home(){const n=new Date(),h=n.getHours(),g=h<12?'Good morning':h<18?'Good afternoon':'Good evening',td=n.getDay(),dt=K(n),l=dayActs(td),p=pct(td,dt),nm=nowM();
 const dn=l.filter(a=>isDone(a.id,dt)).length,cur=l.find(a=>a.s<a.e?(a.s<=nm&&nm<a.e):(nm>=a.s||nm<a.e)),nx=l.find(a=>a.s>nm&&a.id!==(cur&&cur.id));
 const st=S.started[dt]||{};
-return`<div class="view"><small>${n.toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric'})}</small><h1>${g}, ${esc(S.set.name)}.</h1><small>Welcome back, ${esc(S.set.name)}. ${MSG[n.getDate()%4]}</small>
+return`<div class="view"><small>${n.toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric'})}</small><div class="row"><img class="logo" src="icons/icon-192.png" alt=""><h1 style="margin:0">${g}, ${esc(S.set.name)}.</h1></div><small>Welcome back, ${esc(S.set.name)}. ${MSG[n.getDate()%4]}</small>
 <div class="card grad" style="margin-top:14px"><div class="row sp"><div><div class="clock" id="clk"></div><div style="opacity:.85">${dn} done · ${l.length-dn} left</div></div>${ring(p)}</div><div class="bar" style="margin-top:12px;background:rgba(255,255,255,.25)"><i style="width:${p}%;background:#fff"></i></div></div>
-${cur?`<div class="card"><small>NOW</small><div class="row sp"><b style="font-size:1.15rem">${esc(cur.name)}</b><span class="tag" style="--c:${col(cur.cat)}">${CATS[cur.cat][0]}</span></div><small>${fmt(cur.s)} – ${fmt(cur.e)}${st[cur.id]?' · started '+fmt(st[cur.id]):''}</small><div class="row" style="margin-top:10px"><button class="btn sm" data-a="st" data-id="${cur.id}">▶ Start</button><button class="btn sm g" data-a="tg" data-id="${cur.id}" data-d="${dt}">${isDone(cur.id,dt)?'↺ Undo':'✓ Finish'}</button></div></div>`:''}
+${cur?`<div class="card"><small><i class="dot"></i>NOW</small><div class="row sp"><b style="font-size:1.15rem">${esc(cur.name)}</b><span class="tag" style="--c:${col(cur.cat)}">${CATS[cur.cat][0]}</span></div><small>${fmt(cur.s)} – ${fmt(cur.e)}${st[cur.id]?' · started '+fmt(st[cur.id]):''}</small><div class="bar" style="margin-top:10px"><i style="width:${Math.min(100,Math.round(100*((nm-cur.s+1440)%1440)/dur(cur)))}%"></i></div><div class="row" style="margin-top:10px"><button class="btn sm" data-a="st" data-id="${cur.id}">▶ Start</button><button class="btn sm g" data-a="tg" data-id="${cur.id}" data-d="${dt}">${isDone(cur.id,dt)?'↺ Undo':'✓ Finish'}</button></div></div>`:''}
 ${nx?`<div class="card"><small>UP NEXT · in <span id="cd" data-t="${nx.s}"></span></small><div class="row sp"><b>${esc(nx.name)}</b><small>${fmt(nx.s)}</small></div></div>`:''}
 <div class="card"><b>🍅 Focus timer</b><div class="clock" id="pt" style="font-size:2.2rem">${pomT()}</div><small>${pom.brk?'Break':'Focus'}</small><div class="row" style="margin-top:8px"><button class="btn sm" data-a="pp">${pom.run?'Pause':'Start'}</button><button class="btn sm g" data-a="pr">Reset</button></div></div>
 <h2>Today's schedule</h2>${l.length?l.map(a=>item(a,dt,1)).join(''):'<div class="card mu">Nothing planned. Add activities in Schedule.</div>'}</div>`}
@@ -137,7 +170,8 @@ return`<div class="view"><h1>Settings</h1>
 <div class="card"><b>NEVENCHI</b><br><small>PLAN. STUDY. GROW. ACHIEVE.<br>Offline-first · data stays on this device.</small></div></div>`}
 const NAV=[['home','Home','<path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>'],['sched','Schedule','<rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/>'],['tasks','Tasks','<path d="M9 6h12M9 12h12M9 18h12M3 6l1 1 2-2M3 12l1 1 2-2M3 18l1 1 2-2"/>'],['stats','Stats','<path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/>'],['sett','Settings','<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"/>']];
 const VIEWS={home,sched,tasks,stats,sett};
-function render(keep){theme();const y=scrollY;$('#app').innerHTML=VIEWS[V]();$('#nav').innerHTML=NAV.map(n=>`<button class="${V===n[0]?'on':''}" data-a="nv" data-id="${n[0]}"><svg viewBox="0 0 24 24">${n[2]}</svg>${n[1]}</button>`).join('');if(keep)scrollTo(0,y);tick()}
+function render(keep){theme();const y=scrollY;$('#app').classList.toggle('ent',!keep);$('#app').innerHTML=VIEWS[V]();$('#nav').innerHTML=NAV.map(n=>`<button class="${V===n[0]?'on':''}" data-a="nv" data-id="${n[0]}"><svg viewBox="0 0 24 24">${n[2]}</svg>${n[1]}</button>`).join('');if(keep)scrollTo(0,y);tick();if(!keep)cu()}
+function cu(){document.querySelectorAll('[data-n]').forEach(e=>{const n=+e.dataset.n,t0=performance.now();(function f(t){const k=Math.min(1,(t-t0)/1100);e.textContent=Math.round(n*(1-Math.pow(1-k,3)));if(k<1)requestAnimationFrame(f)})(t0)})}
 function tick(){const n=new Date(),c=$('#clk');if(c)c.textContent=S.set.h24?n.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false}):n.toLocaleTimeString([],{hour:'numeric',minute:'2-digit',second:'2-digit'});const d=$('#cd');if(d){const s=d.dataset.t*60-(n.getHours()*3600+n.getMinutes()*60+n.getSeconds());d.textContent=s>0?(s>3600?Math.floor(s/3600)+'h ':'')+Math.floor(s%3600/60)+'m '+String(s%60).padStart(2,'0')+'s':'now'}}
 function remind(){if(!S.set.remind)return;const n=new Date(),dt=K(n),m=nowM();dayActs(n.getDay()).forEach(a=>{const k='r'+a.id+dt;if(a.s-m===5&&!remind[k]){remind[k]=1;toast('⏰ '+a.name+' starts in 5 min');if('Notification'in window&&Notification.permission==='granted')try{new Notification('NEVENCHI',{body:a.name+' starts in 5 minutes'})}catch(e){}}})}
 function gaps(a){const dt=a.day,m=Math.max(nowM(),330),busy=S.acts.filter(b=>b.day===dt&&b.id!==a.id&&b.cat!=='free'&&b.cat!=='sleep').map(b=>[b.s,b.e]).sort((x,y)=>x[0]-y[0]),out=[],d=dur(a);let c=m;for(const[s,e]of busy.concat([[1320,1320]])){if(s-c>=d&&out.length<3)out.push(c);c=Math.max(c,e)}return out.filter(x=>x+d<=1320)}
@@ -177,5 +211,5 @@ if(i.dataset.cc){s.colors[i.dataset.cc]=i.value}else if(i.id==='sn')s.name=i.val
 matchMedia('(prefers-color-scheme: light)').addEventListener('change',()=>S&&theme());
 setInterval(()=>{if(!S)return;tick();if(pom.run){pom.t--;if(pom.t<=0){pom.brk=!pom.brk;pom.t=pom.brk?300:1500;pom.run=false;toast(pom.brk?'🍅 Focus done — take a break':'Break over — ready to focus');if(navigator.vibrate)navigator.vibrate(200);render(1)}else{const p=$('#pt');if(p)p.textContent=pomT()}}},1000);
 setInterval(()=>S&&remind(),20000);
-(async()=>{await idb();S=await dget();if(!S||!S.acts){S=seed();save()}S.set.colors=S.set.colors||{};render();if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{})})();
+(async()=>{await idb();S=await dget();if(!S||!S.acts){S=seed();save()}S.set.colors=S.set.colors||{};render();setTimeout(()=>$('#sp').classList.add('out'),1300);if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{})})();
 </script></body></html>
